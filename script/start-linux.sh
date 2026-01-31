@@ -21,7 +21,6 @@ check_sudo() {
     sudo -v || error "Sudo 验证失败或被取消，脚本终止。"
 }
 
-
 trap cleanup SIGINT SIGTERM
 
 confirm() {
@@ -30,7 +29,6 @@ confirm() {
     echo ""
     [[ "$key" == "Y" || "$key" == "y" || "$key" == "" ]]
 }
-
 
 # 环境检查
 if command -v pacman &> /dev/null; then
@@ -89,7 +87,6 @@ install_debian() {
 chmod +x "$SCRIPT_DIR/bin/llbot/node" "$SCRIPT_DIR/bin/pmhq/pmhq" "$LLBOT_CLI_BIN" 2>/dev/null
 sudo chown -R $(whoami):$(whoami) "$SCRIPT_DIR/bin" 2>/dev/null
 
-
 echo "------------------------------------------------"
 echo "1) GUI 模式 (有界面)"
 echo "2) Shell 模式 (无界面)"
@@ -138,7 +135,9 @@ run_llbot() {
     log "启动模式: $([ $USE_XVFB -eq 1 ] && echo "Headless" || echo "GUI")"
 
     if [ $USE_XVFB -eq 1 ]; then
-        env $IM_ENV xvfb-run -a "$LLBOT_CLI_BIN"
+        warn "Headless 模式将监听 0.0.0.0，可能暴露服务到公网/内网。"
+        warn "请用防火墙/安全组限制来源，或使用 SSH 隧道再访问。"
+        env $IM_ENV xvfb-run -a "$LLBOT_CLI_BIN" --host=0.0.0.0
     else
         [ "$DISTRO" != "arch" ] && xhost +local:$(whoami) > /dev/null 2>&1
         env $IM_ENV "$LLBOT_CLI_BIN"
