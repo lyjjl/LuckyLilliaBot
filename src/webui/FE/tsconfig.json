@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "composite": true,
-    "baseUrl": ".",
     "paths": {
       "@common/types": ["../../common/types"],
       "@ntqqapi/types": ["../../ntqqapi/types"],
