@@ -37,20 +37,20 @@ export class SatoriServer {
     if (!handler) {
       throw new Error(`Unsupported OB11 action: ${action}`)
     }
-    return handler.handle(params, {
+    return await handler.handle(params, {
       messageFormat: 'array',
       debug: false
     })
   }
 
   private async handleOneBotRequest(c: HonoContext, next: Next) {
-    const action = c.req.param('action')
+    const action = c.req.param('action')!
     const payload = c.req.method === 'POST' ? await c.req.json() : c.req.query()
     let result
     try {
-      result = await this.callOneBot11API(action as string, payload)
+      result = await this.callOneBot11API(action, payload)
     } catch (e) {
-      result = OB11Response.error((e as Error)?.toString() ?? String(e), 200)
+      result = OB11Response.error((e as Error).message, 200)
     }
 
     return c.json(result)
@@ -101,14 +101,14 @@ export class SatoriServer {
                   logins: [await handlers.getLogin(this.ctx, {}) as Universal.Login],
                   proxy_urls: [],
                 },
-              } as ObjectToSnake<Universal.ServerPayload>))
+              } satisfies ObjectToSnake<Universal.ServerPayload>))
               this.wsClients.push(ws)
             }
             else if (payload.op === Universal.Opcode.PING) {
               ws.send(JSON.stringify({
                 op: Universal.Opcode.PONG,
                 body: {},
-              } as Universal.ServerPayload))
+              } satisfies Universal.ServerPayload))
             }
           }
         }
@@ -190,7 +190,7 @@ export class SatoriServer {
         socket.send(JSON.stringify({
           op: Universal.Opcode.EVENT,
           body,
-        } as ObjectToSnake<Universal.ServerPayload>))
+        } satisfies ObjectToSnake<Universal.ServerPayload>))
         this.ctx.logger.info('WebSocket 事件上报', body.type)
       }
     })

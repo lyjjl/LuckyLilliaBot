@@ -46,10 +46,6 @@ declare module 'cordis' {
 }
 
 async function onLoad() {
-  if (!existsSync(DATA_DIR)) {
-    mkdirSync(DATA_DIR, { recursive: true })
-  }
-
   if (!existsSync(LOG_DIR)) {
     mkdirSync(LOG_DIR)
   }
@@ -57,6 +53,7 @@ async function onLoad() {
   if (!existsSync(TEMP_DIR)) {
     mkdirSync(TEMP_DIR)
   }
+
   const ctx = new Context()
 
   let config = getConfigUtil().getConfig()
