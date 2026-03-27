@@ -2,6 +2,17 @@ V7.11.1
 更新时间 2026-03-
 
 * 修复自己发送的合并转发消息无法正确显示
+* 修复合并转发图片可能上传失败
+* OneBot 修复获取群文件列表接口无法拿到 `upload_time`
+* Milky 修复 SSE 端点未生效配置的前缀
+* Milky 修复获取群文件列表接口无法拿到 `uploaded_time`
+* Milky 修复合并转发可能渲染异常
+* Milky 给 `GroupEntity` 增加了更多元信息
+  * `remark`，表示给群的备注
+  * `created_time`，表示群创建的时间
+  * `description`，表示群的简介
+  * `question`，表示入群问题
+  * `announcement`，表示群公告预览（通常是该群最近一次的群公告内容节选）
 
 =================
 
@@ -15,7 +26,7 @@ V7.11.0
 * macOS CLI 版本优化启动权限
 * Windows CLI 版本修复无法在 Windows 2016 以下版本使用
 
-* Windows Desktop 
+* Windows Desktop
   * 修复可能无法检测到 QQ 正在运行
   * 修复离线消息上报
 
