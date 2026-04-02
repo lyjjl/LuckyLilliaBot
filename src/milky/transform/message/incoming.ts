@@ -194,7 +194,7 @@ export async function transformIncomingSegments(ctx: Context, message: RawMessag
       case ElementType.Ark:
         const { arkElement } = element
         const data = JSON.parse(arkElement!.bytesData)
-        if (data.app === 'com.tencent.multimsg') {
+        if (data.app === 'com.tencent.multimsg' && data.meta.detail.resid) {
           segments.push({
             type: 'forward',
             data: {
