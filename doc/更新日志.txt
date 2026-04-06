@@ -1,3 +1,10 @@
+V7.11.2
+更新时间 2026-04-
+
+* OneBot 修复 Content-Type 为 `application/x-www-form-urlencoded` 时无法调用 HTTP API
+
+=================
+
 V7.11.1
 更新时间 2026-04-06
 
